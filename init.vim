@@ -42,12 +42,20 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'rust-lang/rust.vim'
 Plug 'mattn/webapi-vim'
+Plug 'ellisonleao/gruvbox.nvim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'jparise/vim-graphql'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 call plug#end()
 
 " Setup plugins
+set termguicolors
+set background=dark
+colorscheme gruvbox
 let g:rustfmt_autosave = 1
 let g:rust_clip_command = 'pbcopy'
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-css', 'coc-snippets', 'coc-eslint', 'coc-tabnine', 'coc-explorer', 'coc-rls']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-css', 'coc-snippets', 'coc-eslint', 'coc-tabnine', 'coc-explorer', 'coc-rls', 'coc-flutter']
 nmap <leader>n <Cmd>CocCommand explorer<CR>
 let g:sneak#label = 1
 let g:nvim_markdown_preview_format = 'markdown'
@@ -59,8 +67,8 @@ nnoremap <leader>c :bw<CR>
 
 " Find files using Telescope command-line sugar.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>ff <cmd>Telescope find_files find_command=rg,--hidden,--files <cr>
+nnoremap <leader>fg <cmd>Telescope live_grep find_command=rg,--hidden,--files<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
@@ -217,7 +225,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Lua section, config plugins
 
 lua << END
-require('nightfox').load('duskfox')
 
 require'lualine'.setup {
   options = {
