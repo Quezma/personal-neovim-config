@@ -47,6 +47,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
+Plug 'rodrigore/coc-tailwind-intellisense', {'do': 'npm install'}
 call plug#end()
 
 " Setup plugins
@@ -55,8 +56,8 @@ set background=dark
 colorscheme gruvbox
 let g:rustfmt_autosave = 1
 let g:rust_clip_command = 'pbcopy'
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-css', 'coc-snippets', 'coc-eslint', 'coc-tabnine', 'coc-explorer', 'coc-rls', 'coc-flutter']
-nmap <leader>n <Cmd>CocCommand explorer<CR>
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-css', 'coc-snippets', 'coc-eslint', 'coc-tabnine', 'coc-explorer', 'coc-rls', 'coc-flutter', 'coc-react-refactor']
+nmap <leader>n <Cmd>CocCommand explorer --width 30<CR>
 let g:sneak#label = 1
 let g:nvim_markdown_preview_format = 'markdown'
 
@@ -67,8 +68,8 @@ nnoremap <leader>c :bw<CR>
 
 " Find files using Telescope command-line sugar.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-nnoremap <leader>ff <cmd>Telescope find_files find_command=rg,--hidden,--files <cr>
-nnoremap <leader>fg <cmd>Telescope live_grep find_command=rg,--hidden,--files<cr>
+nnoremap <leader>ff <cmd>Telescope find_files find_command=rg,--hidden,--files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep find_command=rg,--hidden,--files,--git<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
@@ -79,6 +80,51 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
+
+let g:coc_explorer_global_presets = {
+\   '.vim': {
+\     'root-uri': '~/.vim',
+\   },
+\   'cocConfig': {
+\      'root-uri': '~/.config/coc',
+\   },
+\   'tab': {
+\     'position': 'tab',
+\     'quit-on-open': v:true,
+\   },
+\   'tab:$': {
+\     'position': 'tab:$',
+\     'quit-on-open': v:true,
+\   },
+\   'floating': {
+\     'position': 'floating',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingTop': {
+\     'position': 'floating',
+\     'floating-position': 'center-top',
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingLeftside': {
+\     'position': 'floating',
+\     'floating-position': 'left-center',
+\     'floating-width': 50,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'floatingRightside': {
+\     'position': 'floating',
+\     'floating-position': 'right-center',
+\     'floating-width': 50,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'simplify': {
+\     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+\   },
+\   'buffer': {
+\     'sources': [{'name': 'buffer', 'expand': v:true}]
+\   },
+\ }
+
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
   set signcolumn=number
@@ -225,6 +271,11 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Lua section, config plugins
 
 lua << END
+
+
+require'telescope'.setup {
+  defaults = { file_ignore_patterns = {"node_modules", ".next"} }
+} 
 
 require'lualine'.setup {
   options = {
