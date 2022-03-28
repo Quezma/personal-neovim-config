@@ -48,12 +48,13 @@ Plug 'jparise/vim-graphql'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'rodrigore/coc-tailwind-intellisense', {'do': 'npm install'}
+Plug 'rose-pine/neovim'
 call plug#end()
 
 " Setup plugins
 set termguicolors
 set background=dark
-colorscheme gruvbox
+colorscheme rose-pine
 let g:rustfmt_autosave = 1
 let g:rust_clip_command = 'pbcopy'
 let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-css', 'coc-snippets', 'coc-eslint', 'coc-tabnine', 'coc-explorer', 'coc-rls', 'coc-flutter', 'coc-react-refactor']
@@ -272,7 +273,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 lua << END
 
-
 require'telescope'.setup {
   defaults = { file_ignore_patterns = {"node_modules", ".next"} }
 } 
@@ -280,7 +280,7 @@ require'telescope'.setup {
 require'lualine'.setup {
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = 'rose-pine',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
